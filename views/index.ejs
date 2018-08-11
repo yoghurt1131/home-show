@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>おうちディスプレイ</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/paper.css' />
+  </head>
+  <body>
+    <div class='frame'>
+      <div class='col border-5 border-dashed banner'>
+        <span class='label'><%= date %> <img src="/images/<%= wether %>.png" class='no-responsive no-border weather-icon' /> <%= temperature %></span>
+      </div>
+      <div class='list'>
+        <div class="card list-card">
+          <div class="card-body">
+            <h3 class="card-title">買い物リスト</h3>
+            <ul>
+              <li class="list-item">ヨーグルト</li>
+              <li class="list-item">キッチンペーパー</li>
+              <li class="list-item">牛乳</li>
+              <li class="list-item">食パン</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card list-card">
+          <div class="card-body">
+            <h3 class="card-title">今日の予定</h3>
+            <ul>
+              <li class="list-item">いしん飲み会</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
