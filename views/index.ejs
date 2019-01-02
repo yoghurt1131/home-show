@@ -10,12 +10,13 @@
   <body>
     <div class='frame'>
       <div class='col border-5 border-dashed banner'>
-        <span class='label' id='data'><%= date %> Tokyo <img src="/images/<%= wether %>.png" class='no-responsive no-border weather-icon' /> {{ temperature }}℃</span>
+        <span id='temperature'class='label'><%= date %> Tokyo {{ value }}℃</span>
+        <img id='weather-icon' :src=src class='no-responsive no-border weather-icon' />
       </div>
       <div class='list'>
         <div class="card list-card">
           <div class="card-body">
-            <h3 class="card-title">買い物リスト</h3>
+            <h3 class="card-title">買い物リスト(Coming Soon..)</h3>
             <ul>
               <li class="list-item">ヨーグルト</li>
               <li class="list-item">キッチンペーパー</li>
@@ -26,9 +27,10 @@
         </div>
         <div class="card list-card">
           <div class="card-body">
-            <h3 class="card-title">今日の予定</h3>
+            <h3 class="card-title">今日の予定(Coming Soon..)</h3>
             <ul>
-              <li class="list-item">お出かけ</li>
+              <li class="list-item">宅配便</li>
+              <li class="list-item">飲み会</li>
             </ul>
           </div>
         </div>
@@ -38,14 +40,21 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
       var socket = io.connect('http://localhost:3000');
-      let app = new Vue({
-          el: '#data',
+      let icon = new Vue({
+          el: '#weather-icon',
           data: {
-            temperature: <%= temperature %>
+            src: "<%= icon %>"
+          }
+      });
+      let temperature = new Vue({
+          el: '#temperature',
+          data: {
+            value: <%= temperature %>,
           }
       });
       socket.on('subscribe', function (data) {
-        app.temperature = data['temperature'];
+        icon.src = data['icon'];
+        temperature.value = data['temperature'];
       });
     </script>
 </html>

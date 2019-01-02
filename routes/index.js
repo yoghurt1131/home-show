@@ -27,6 +27,7 @@ router.get('/', async function(req, res, next) {
   let renderMap = new Object();
   renderMap['date'] = new Date().toFormat('MM/DD(DDD)');
   renderMap['wether'] = 'sun' //default
+  renderMap['icon'] = 'http://openweathermap.org/img/w/01d.png' //default
   renderMap['temperature'] = 0; //default
 // temperature
   const response = await promise(options)
@@ -42,7 +43,11 @@ cron.schedule('*/30 * * * * *', () => {
   promise(options)
   .then(function(data) {
     console.log(data);
-    socket.emit('report', { temperature: data['temperature'] });
+    socket.emit('report', { temperature: data['temperature'], icon: data['weatherIconUrl'] });
+  })
+  .catch(function(err) {
+    console.log(err.message);
+    console.log("Cannot connect to weather api.");
   });
 });
 
