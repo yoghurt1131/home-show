@@ -4,11 +4,13 @@
     <title>おうちディスプレイ</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/paper.css' />
+    <!-- production version, optimized for size and speed -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
   </head>
   <body>
     <div class='frame'>
       <div class='col border-5 border-dashed banner'>
-        <span class='label'><%= date %> <img src="/images/<%= wether %>.png" class='no-responsive no-border weather-icon' /> <%= temperature %></span>
+        <span class='label' id='data'><%= date %> Tokyo <img src="/images/<%= wether %>.png" class='no-responsive no-border weather-icon' /> {{ temperature }}℃</span>
       </div>
       <div class='list'>
         <div class="card list-card">
@@ -33,4 +35,17 @@
       </div>
     </div>
   </body>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io.connect('http://localhost:3000');
+      let app = new Vue({
+          el: '#data',
+          data: {
+            temperature: <%= temperature %>
+          }
+      });
+      socket.on('subscribe', function (data) {
+        app.temperature = data['temperature'];
+      });
+    </script>
 </html>
