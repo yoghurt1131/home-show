@@ -3,7 +3,7 @@ const cron = require('node-cron');
 const express = require('express');
 const promise = require('request-promise');
 const router = express.Router();
-const socket = require('socket.io-client')('http://localhost:3000');
+const socket = require('socket.io-client')('localhost:3000');
 
 const city = 'Tokyo';
 
