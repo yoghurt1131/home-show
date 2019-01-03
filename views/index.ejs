@@ -39,7 +39,7 @@
   </body>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-      var socket = io.connect('localhost:3000');
+      var socket = io.connect('<%= socketHost %>');
       let icon = new Vue({
           el: '#weather-icon',
           data: {

@@ -1,15 +1,18 @@
 require('date-utils');
+const config = require('config');
 const cron = require('node-cron');
 const express = require('express');
 const promise = require('request-promise');
 const router = express.Router();
-const socket = require('socket.io-client')('localhost:3000');
+
+const socketHost = config.get('server.host') + ':' + config.get('server.port');
+const socket = require('socket.io-client')(socketHost);
 
 const city = 'Tokyo';
 
 // options for request
 const options = {
-  uri: 'http://localhost:8080/current/city',
+  uri: config.get('domain.weather') +'/current/city',
   method: 'GET',
   headers: {
     'content-type': 'application/json',
@@ -25,6 +28,7 @@ const options = {
 /* GET home page. */
 router.get('/', async function(req, res, next) {
   let renderMap = new Object();
+  renderMap['socketHost'] = socketHost;
   renderMap['date'] = new Date().toFormat('MM/DD(DDD)');
   renderMap['wether'] = 'sun' //default
   renderMap['icon'] = 'http://openweathermap.org/img/w/01d.png' //default
