@@ -1,4 +1,3 @@
-require('date-utils');
 const config = require('config');
 const cron = require('node-cron');
 const express = require('express');
@@ -29,7 +28,6 @@ const options = {
 router.get('/', async function(req, res, next) {
   let renderMap = new Object();
   renderMap['socketHost'] = socketHost;
-  renderMap['date'] = new Date().toFormat('MM/DD(DDD)');
   renderMap['wether'] = 'sun' //default
   renderMap['icon'] = 'http://openweathermap.org/img/w/01d.png' //default
   renderMap['temperature'] = 0; //default
@@ -37,6 +35,7 @@ router.get('/', async function(req, res, next) {
   const response = await promise(options)
   console.log(response);
   renderMap['temperature'] = response['temperature'];
+  renderMap['icon'] = response['weatherIconUrl'];
   console.log('start render');
   res.render('index', renderMap);
 });

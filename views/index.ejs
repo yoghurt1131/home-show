@@ -6,11 +6,13 @@
     <link rel='stylesheet' href='/stylesheets/paper.css' />
     <!-- production version, optimized for size and speed -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.min.js"></script>
+    <script type="text/javascript" src="javascripts/date-utils.min.js"></script>
   </head>
   <body>
     <div class='frame'>
       <div class='col border-5 border-dashed banner'>
-        <span id='temperature'class='label'><%= date %> Tokyo {{ value }}℃</span>
+        <span id='datetime'class='label'>{{ now }}</span>
+        <span id='temperature'class='label'>Tokyo {{ value }}℃</span>
         <img id='weather-icon' :src=src class='no-responsive no-border weather-icon' />
       </div>
       <div class='list'>
@@ -40,6 +42,15 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
       var socket = io.connect('<%= socketHost %>');
+      let crock = new Vue({
+          el: '#datetime',
+          data: {
+            now: (new Date).toFormat('MM/DD(DDD) HH:MI'),
+          },
+          created: function() {
+            setInterval(() => this.now = (new Date).toFormat('MM/DD(DDD) HH:MI'), 1000 * 15)
+          }
+      });
       let icon = new Vue({
           el: '#weather-icon',
           data: {
