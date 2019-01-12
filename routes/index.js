@@ -32,7 +32,7 @@ router.get('/', async function(req, res, next) {
   renderMap['icon'] = 'http://openweathermap.org/img/w/01d.png' //default
   renderMap['temperature'] = 0; //default
 // temperature
-  const response = await promise(options)
+  const response = await promise(options);
   console.log(response);
   renderMap['temperature'] = response['temperature'];
   renderMap['icon'] = response['weatherIconUrl'];
