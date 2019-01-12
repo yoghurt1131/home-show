@@ -60,7 +60,7 @@
       let temperature = new Vue({
           el: '#temperature',
           data: {
-            value: <%= temperature %>,
+            value: '<%= temperature %>',
           }
       });
       socket.on('subscribe', function (data) {

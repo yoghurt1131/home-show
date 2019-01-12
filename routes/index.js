@@ -21,23 +21,31 @@ const options = {
     cityName: city 
   },
   json: true
-}
-
+};
 
 /* GET home page. */
 router.get('/', async function(req, res, next) {
-  let renderMap = new Object();
+  let renderMap = {};
   renderMap['socketHost'] = socketHost;
-  renderMap['wether'] = 'sun' //default
-  renderMap['icon'] = 'http://openweathermap.org/img/w/01d.png' //default
-  renderMap['temperature'] = 0; //default
-// temperature
-  const response = await promise(options);
-  console.log(response);
-  renderMap['temperature'] = response['temperature'];
-  renderMap['icon'] = response['weatherIconUrl'];
-  console.log('start render');
-  res.render('index', renderMap);
+  renderMap['wether'] = 'sun'; //default
+  renderMap['icon'] = 'images/undefined.png'; //default
+  renderMap['temperature'] = '-'; //default
+
+  const onRejected = (error) => {
+    console.log("call error.");
+    console.log(error);
+  };
+  try {
+      // temperature
+      const response = await promise(options);
+      console.log(response);
+      renderMap['temperature'] = response['temperature'];
+      renderMap['icon'] = response['weatherIconUrl'];
+      console.log('start render');
+  } catch (error) {
+    console.log("The error has occurred when calling weather api.");
+  }
+      res.render('index', renderMap);
 });
 
 /* get data periodically */
