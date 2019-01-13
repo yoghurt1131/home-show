@@ -15,9 +15,7 @@ gulp.task('saas', function () {
 });
 
 gulp.task('build', (callback) => {
-    gulp.src('./views/index.ejs')
-        .pipe(gulp.dest('./public'));
-    gulp.src('./views/error.ejs')
+    gulp.src('./views/*.ejs')
         .pipe(gulp.dest('./public'));
     callback();
 });
