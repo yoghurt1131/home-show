@@ -7,23 +7,37 @@ const plumber = require('gulp-plumber');
 const browserify = require('gulp-browserify');
 const vueify = require('vueify');
 const nodemon = require('gulp-nodemon');
+const imagemin = require('gulp-imagemin');
+const cache = require('gulp-cache');
 
-gulp.task('saas', function () {
-    return gulp.src('public/stylesheets/style.sass')
+gulp.task('saas', (callback) => {
+    gulp.src('src/stylesheets/style.sass')
         .pipe(sass())
         .pipe(gulp.dest('public/stylesheets'));
+    gulp.src('src/stylesheets/paper.css')
+        .pipe(gulp.dest('public/stylesheets'));
+    callback();
+});
+
+gulp.task('images', (callback) => {
+    gulp.src('src/images/**/*')
+        .pipe(cache(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
+        .pipe(gulp.dest('public/images'));
+    callback();
 });
 
 gulp.task('build', (callback) => {
-    gulp.src('./views/*.ejs')
+    gulp.src('./src/views/*.ejs')
         .pipe(gulp.dest('./public'));
+    gulp.src('./src/javascripts/*.js')
+        .pipe(gulp.dest('./public/javascripts'));
     callback();
 });
 
 gulp.task('watch', (callback) => {
-    gulp.watch('./routes/**/*.*', gulp.task('build'));
-    gulp.watch('./views/**/*.*', gulp.task('build'));
-    gulp.watch('./public/stylesheets/*.sass', gulp.task('sass'));
+    gulp.watch('./src/routes/*.*', gulp.task('build'));
+    gulp.watch('./src/views/*.*', gulp.task('build'));
+    gulp.watch('./src/stylesheets/*.sass', gulp.task('sass'));
     gulp.watch('./public/**/*.*').on('change', browserSync.reload);
     callback();
 });
@@ -36,7 +50,7 @@ gulp.task('nodemon', function () {
     })
 })
 
-gulp.task('browser-sync-express', gulp.series('saas', 'build', 'watch', 'nodemon'), function() {
+gulp.task('browser-sync-express', gulp.series('saas', 'images', 'build', 'watch', 'nodemon'), function() {
     browserSync.init({
         proxy: "localhost:9090"
     });
