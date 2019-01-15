@@ -4,7 +4,8 @@ const sass = require('gulp-sass');
 const browserSync = require('browser-sync');
 const concat = require('gulp-concat');
 const plumber = require('gulp-plumber');
-const browserify = require('gulp-browserify');
+const browserify = require('browserify');
+const source     = require('vinyl-source-stream');
 const vueify = require('vueify');
 const nodemon = require('gulp-nodemon');
 const imagemin = require('gulp-imagemin');
@@ -27,10 +28,13 @@ gulp.task('images', (callback) => {
 });
 
 gulp.task('build', (callback) => {
-    gulp.src('./src/views/*.ejs')
+    gulp.src('./src/views/*.*')
         .pipe(gulp.dest('./public'));
-    gulp.src('./src/javascripts/*.js')
-        .pipe(gulp.dest('./public/javascripts'));
+    browserify({
+        'entries': ['./src/views/main.js']
+    }).bundle()
+        .pipe(source('bundle.js'))
+        .pipe(gulp.dest('./public/'));
     callback();
 });
 
