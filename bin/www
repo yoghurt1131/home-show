@@ -32,7 +32,6 @@ server.on('listening', onListening);
 
 // socket.io
 const io = require('socket.io')(server);
-const cron = require('node-cron');
 const room = 'room';
 io.on('connection', (socket) => {
   socket.join(room);

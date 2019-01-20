@@ -30,15 +30,9 @@ router.get('/', async function(req, res, next) {
   renderMap['wether'] = 'sun'; //default
   renderMap['icon'] = 'images/undefined.png'; //default
   renderMap['temperature'] = '-'; //default
-
-  const onRejected = (error) => {
-    console.log("call error.");
-    console.log(error);
-  };
   try {
       // temperature
       const response = await promise(options);
-      console.log(response);
       renderMap['temperature'] = response['temperature'];
       renderMap['icon'] = response['weatherIconUrl'];
       console.log('start render');
