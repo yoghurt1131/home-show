@@ -24,7 +24,6 @@ window.addEventListener('load', function() {
 
     var socket = io.connect(socketHost);
     socket.on('subscribe', function (data) {
-        console.log('get data...!');
         icon.src = data['icon'];
         temperature.value = data['temperature'];
     });
