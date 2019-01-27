@@ -35,6 +35,9 @@ gulp.task('build', (callback) => {
     }).bundle()
         .pipe(source('bundle.js'))
         .pipe(gulp.dest('./public/'));
+    // libraries
+    gulp.src('./src/javascripts/*.js')
+      .pipe(gulp.dest('./public/javascripts'));
     callback();
 });
 
