@@ -32,7 +32,9 @@ gulp.task('build', (callback) => {
         .pipe(gulp.dest('./public'));
     browserify({
         'entries': ['./src/views/main.js']
-    }).bundle()
+    })
+      .transform(vueify)
+      .bundle()
         .pipe(source('bundle.js'))
         .pipe(gulp.dest('./public/'));
     // libraries

@@ -1,5 +1,5 @@
 <template>
-    {{ now }}
+    <span class='label'>{{ now }}</span>
 </template>
 
 <script>
@@ -15,7 +15,7 @@
         (new Date).toFormat('MM/DD(DDD) HH:MI'), 1000 * 15
       );
     }
-  }
+  };
 </script>
 
 <style scoped>
