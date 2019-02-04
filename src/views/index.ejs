@@ -15,10 +15,9 @@
   </head>
   <body>
     <div class='frame'>
-      <div class='col border-5 border-dashed banner'>
-        <span id='datetime'class='label'>{{ now }}</span>
-        <span id='temperature'class='label'>Tokyo {{ value }}℃</span>
-        <img id='weather-icon' :src=src class='no-responsive no-border weather-icon' />
+      <div class='col border-5 border-dashed banner' id="banner">
+        <clock></clock>
+        <weather></weather>
       </div>
       <div class='list'>
         <div class="card list-card">
