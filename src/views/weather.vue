@@ -15,15 +15,12 @@
       }
     },
     created: function() {
-      let temp = '-';
-      let src ='images/undefined.png';
+      let module = this;
       const socket = io.connect(socketHost);
-      socket.on('subscribe', function(data) {
-        src = data['icon'];
-        temp = data['temperature'];
+      socket.on('subscribe', function(socket) {
+        module.src = socket['icon'];
+        module.temp = socket['temperature'];
       });
-      setInterval(() => this.temp = temp, 1000);
-      setInterval(() => this.src = src, 1000);
     }
   }
 </script>
