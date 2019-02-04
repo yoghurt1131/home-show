@@ -6,12 +6,7 @@ window.addEventListener('load', function() {
   new Vue({
     el: '#banner',
     components: {
-      clock: clock
-    }
-  });
-  new Vue({
-    el: '#banner',
-    components: {
+      clock: clock,
       weather: weather
     }
   });
