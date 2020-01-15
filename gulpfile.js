@@ -52,14 +52,15 @@ gulp.task('watch', (callback) => {
 // start express using nodemon with autoreload
 gulp.task('nodemon', function () {
   nodemon({
-    script: 'bin/www'
-    , ext: 'js'
-  })
-})
+    script: 'bin/www',
+    ext: 'js',
+  });
+});
 
+// eslint-disable-next-line max-len
 gulp.task('browser-sync-express', gulp.series('saas', 'images', 'build', 'watch', 'nodemon'), function() {
   browserSync.init({
-    proxy: "localhost:9090"
+    proxy: 'localhost:9090',
   });
 });
 
